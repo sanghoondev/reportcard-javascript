@@ -4,22 +4,59 @@
     <meta charset='utf-8'>
     <script>
         // Student variables
+        var studentId   = new Array();   
+        var studentName = new Array();
+        var kor         = new Array();
+        var eng         = new Array();
+        var mat         = new Array();
+        var studentTot  = new Array();
+        var studentAvg  = new Array();
 
         // Class variables
+        var classKor = new Array();
+        var classEng = new Array();
+        var classMat = new Array();
+        var classTot = new Array();
+        var classAvg = new Array();
 
         // Cumulative variables
+        var aggreKor = 0;
+        var aggreEng = 0;
+        var aggreMat = 0;
+        var aggreTot = 0;
+        var aggreAvg = 0;
 
         // Other variables
+        var totalStudents = 1000;
+        var totalClass    = 30;
+        var classMax      = Math.ceil(totalStudents / totalClass);
 
         // 0 front of number
+        function leadZero(num, n) {
+            var leadZero = "";
+            num = num.toString();
+            if (num.length < n) { for (var i = 0; i < n - num.length; i++) leadZero += "0"; }
+            return leadZero + num;
+        }
 
         // Print date
+        function date() {
+            var d = new Date();
+            return (d.getFullYear() + "-" + leadZero((d.getMonth() + 1), 2) + "-" + leadZero(d.getDate(), 2) + "  " + leadZerio(d.getHours(), 2) + ":" + leadZero(d.getMinutes(), 2) + ":" + leadZero(d.getSeconds(), 2));
+        }
 
         // Student loop variables
+        var classStart = 0;
+        var classEnd   = totalClass;
 
-        // Student score
-
-
+        // Student score (random)
+        for (var i = 0; i < totalStudents; i++) {
+            kor[i] = Math.ceil(Math.random() * 100);
+            eng[i] = Math.ceil(Math.random() * 100);
+            mat[i] = Math.ceil(Math.random() * 100);
+            studentTot[i] = kor[i] + eng[i] + mat[i];
+            studentAvg[i] = studentTot[i] / 3;
+        }
     </script>
 </head>
 
@@ -47,7 +84,7 @@
 
             // Extra tail
 
-            
+
         </script>
     </table>
 </body>
