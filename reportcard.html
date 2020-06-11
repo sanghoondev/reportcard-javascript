@@ -4,13 +4,13 @@
     <meta charset='utf-8'>
     <script>
         // Student variables
-        var studentId   = new Array();   
+        var studentId = new Array();
         var studentName = new Array();
-        var kor         = new Array();
-        var eng         = new Array();
-        var mat         = new Array();
-        var studentTot  = new Array();
-        var studentAvg  = new Array();
+        var kor = new Array();
+        var eng = new Array();
+        var mat = new Array();
+        var studentTot = new Array();
+        var studentAvg = new Array();
 
         // Class variables
         var classKor = new Array();
@@ -18,6 +18,13 @@
         var classMat = new Array();
         var classTot = new Array();
         var classAvg = new Array();
+
+        // Class variables
+        var classTotKor = 0;
+        var classTotEng = 0;
+        var classTotMat = 0;
+        var classTotStudent = 0;
+        var classAvgStudent = 0;
 
         // Cumulative variables
         var aggreKor = 0;
@@ -27,9 +34,9 @@
         var aggreAvg = 0;
 
         // Other variables
-        var totalStudents = 1000;
-        var totalClass    = 30;
-        var classMax      = Math.ceil(totalStudents / totalClass);
+        var studentAll = 1000;
+        var studentClass = 30;
+        var classMax = Math.ceil(studentAll / studentClass); // Total classes
 
         // 0 front of number
         function leadZero(num, n) {
@@ -42,15 +49,16 @@
         // Print date
         function date() {
             var d = new Date();
-            return (d.getFullYear() + "-" + leadZero((d.getMonth() + 1), 2) + "-" + leadZero(d.getDate(), 2) + "  " + leadZerio(d.getHours(), 2) + ":" + leadZero(d.getMinutes(), 2) + ":" + leadZero(d.getSeconds(), 2));
+            return (d.getFullYear() + "-" + leadZero((d.getMonth() + 1), 2) + "-" + leadZero(d.getDate(), 2) 
+                + "  " + leadZero(d.getHours(), 2) + ":" + leadZero(d.getMinutes(), 2) + ":" + leadZero(d.getSeconds(), 2));
         }
 
         // Student loop variables
-        var classStart = 0;
-        var classEnd   = totalClass;
+        var countStart = 0;
+        var countEnd = studentClass;
 
-        // Student score (random)
-        for (var i = 0; i < totalStudents; i++) {
+        // Student score
+        for (var i = 0; i < studentAll; i++) {
             kor[i] = Math.ceil(Math.random() * 100);
             eng[i] = Math.ceil(Math.random() * 100);
             mat[i] = Math.ceil(Math.random() * 100);
@@ -61,30 +69,119 @@
 </head>
 
 <body>
-    <!-- Table -->
-    <table border="2" cellspacing=0>
+    <table border="1" cellspacing=0>
         <script>
-            // Table        
+            // Table
 
             // Header
+            for (var p = 0; p < classMax; p++) {
+                document.write("<tr><td colspan='7' align='center'>Report Card</td></tr>");
+                document.write("<tr>");
+                document.write("<td colspan='2'>PAGE : " + (p + 1) + "</td>");
+                document.write("<td colspan='5' align='right'>Output Date : " + date() + "</td>");
+                document.write("</tr>");
+                document.write("<tr>");
+                document.write("<td align='center'>ID</td>");
+                document.write("<td align='center'>Name</td>");
+                document.write("<td align='center'>Kor</td>");
+                document.write("<td align='center'>Eng</td>");
+                document.write("<td align='center'>Math</td>");
+                document.write("<td align='center'>Total</td>");
+                document.write("<td align='center'>Average</td>");
+                document.write("</tr>");
 
-            // Body
+                classTotKor     = 0;
+                classTotEng     = 0;
+                classTotMat     = 0;
+                classTotStudent = 0;
+                classAvgStudent = 0;
 
-            // Class report card
+                // Body
+                for (var i = countStart; i < countEnd; i++) {
+                    document.write("<tr>");
+                    document.write("<td>" + (i + 1) + "</td>");
+                    document.write("<td> Name" + (i + 1) + "</td>");
+                    document.write("<td align='right'>" + kor[i] + "</td>");
+                    document.write("<td align='right'>" + eng[i] + "</td>");
+                    document.write("<td align='right'>" + mat[i] + "</td>");
+                    document.write("<td align='right'>" + studentTot[i] + "</td>");
+                    document.write("<td align='right'>" + Math.ceil(studentAvg[i] * 100) / 100 + "</td>");
+                    document.write("</tr>");
+                    classTotKor     += kor[i];
+                    classTotEng     += eng[i];
+                    classTotMat     += mat[i];
+                    classTotStudent += studentTot[i];
+                    classAvgStudent += studentAvg[i];
+                }
 
-            // Class average
+                // Calculate class average
+                classKor[p] = classTotKor;
+                classEng[p] = classTotEng;
+                classMat[p] = classTotMat;
+                classTot[p] = classTotStudent;
+                classAvg[p] = classAvgStudent;
 
-            // Class total
+                // Sum class score
+                document.write("<tr>");
+                document.write("<td>Class Total Score</td>");
+                document.write("<td></td>");
+                document.write("<td align='right'>" + classKor[p] + "</td>");
+                document.write("<td align='right'>" + classEng[p] + "</td>");
+                document.write("<td align='right'>" + classMat[p] + "</td>");
+                document.write("<td align='right'>" + classTot[p] + "</td>");
+                document.write("<td align='right'>" + Math.ceil(classAvg[p] * 100) / 100 + "</td>");
+                document.write("</tr>");
 
-            // Cumulative report card
+                // Average class score
+                document.write("<tr>");
+                document.write("<td>Class Average</td>");
+                document.write("<td></td>");
+                document.write("<td align='right'>" + Math.ceil((classTotKor / studentClass) * 100) / 100 + "</td>");
+                document.write("<td align='right'>" + Math.ceil((classTotEng / studentClass) * 100) / 100 + "</td>");
+                document.write("<td align='right'>" + Math.ceil((classTotMat / studentClass) * 100) / 100 + "</td>");
+                document.write("<td align='right'>" + Math.ceil((classTotStudent / studentClass) * 100) / 100 + "</td>");
+                document.write("<td align='right'>" + Math.ceil((classAvgStudent / studentClass) * 100) / 100 + "</td>");
+                document.write("</tr>");
 
-            // Cumulative average
+                // Calculate cumulative score
+                aggreKor += classKor[p];
+                aggreEng += classEng[p];
+                aggreMat += classMat[p];
+                aggreTot += classTot[p];
+                aggreAvg += aggreTot / 3;
 
-            // Cumulative total
+                // Cumulative total score
+                document.write("<tr>");
+                document.write("<td>Cumulative Total Score</td>");
+                document.write("<td></td>");
+                document.write("<td align='right'>" + aggreKor + "</td>");
+                document.write("<td align='right'>" + aggreEng + "</td>");
+                document.write("<td align='right'>" + aggreMat + "</td>");
+                document.write("<td align='right'>" + aggreTot + "</td>");
+                document.write("<td align='right'>" + Math.ceil((aggreTot / 3) * 100) / 100 + "</td>");
+                document.write("</tr>");
 
-            // Extra tail
+                // Cumulative average score
+                document.write("<tr>");
+                document.write("<td>Cumulative Average</td>");
+                document.write("<td></td>");
+                document.write("<td align='right'>" + Math.ceil((aggreKor / countEnd) * 100) / 100 + "</td>");
+                document.write("<td align='right'>" + Math.ceil((aggreEng / countEnd) * 100) / 100 + "</td>");
+                document.write("<td align='right'>" + Math.ceil((aggreMat / countEnd) * 100) / 100 + "</td>");
+                document.write("<td align='right'>" + Math.ceil((aggreTot / countEnd) * 100) / 100 + "</td>");
+                document.write("<td align='right'>" + Math.ceil(((aggreTot / countEnd) / 3) * 100) / 100 + "</td>");
+                document.write("</tr>");
 
+                // Tail
+                document.write("<tr style='border-left: none; border-right: none; height: 20px;'><td colspan='7' align='center'></td></tr>");
 
+                countStart = countEnd;
+                countEnd   = countEnd + studentClass;
+                if (countEnd > studentAll) {
+                    countEnd = studentAll;
+                    studentClass = countEnd - countStart;
+                }
+            }
         </script>
     </table>
 </body>
